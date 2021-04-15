@@ -1,5 +1,10 @@
 #!/bin/bash -e
 
+if [[ -d "/data/lost+found" ]]; then
+    rm -rf /data/lost+found
+    echo "Folder for lost+found removed"
+fi
+
 # Allow specific kafka versions to perform any unique bootstrap operations
 OVERRIDE_FILE="/opt/overrides/${KAFKA_VERSION}.sh"
 if [[ -x "$OVERRIDE_FILE" ]]; then
