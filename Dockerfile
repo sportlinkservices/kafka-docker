@@ -16,7 +16,7 @@ ENV PATH=${PATH}:${KAFKA_HOME}/bin
 COPY download-kafka.sh start-kafka.sh broker-list.sh create-topics.sh versions.sh /tmp/
 
 RUN apk add --no-cache bash curl jq docker \
- && mkdir /opt \
+ && mkdir -p /opt \
  && chmod a+x /tmp/*.sh \
  && mv /tmp/start-kafka.sh /tmp/broker-list.sh /tmp/create-topics.sh /tmp/versions.sh /usr/bin \
  && sync && /tmp/download-kafka.sh \
@@ -28,9 +28,8 @@ RUN apk add --no-cache bash curl jq docker \
  && apk add --no-cache --allow-untrusted glibc-${GLIBC_VERSION}.apk \
  && rm glibc-${GLIBC_VERSION}.apk
 
+COPY jmx_prometheus_javaagent-0.3.1.jar /opt/kafka/jmx_prometheus_javaagent.jar
 COPY overrides /opt/overrides
-
-VOLUME ["/kafka"]
 
 # Use "exec" form so that it runs as PID 1 (useful for graceful shutdown)
 CMD ["start-kafka.sh"]

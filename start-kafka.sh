@@ -145,5 +145,5 @@ echo "" >> "$KAFKA_HOME/config/server.properties"
 if [[ -n "$CUSTOM_INIT_SCRIPT" ]] ; then
   eval "$CUSTOM_INIT_SCRIPT"
 fi
-
+cat $KAFKA_HOME/config/server.properties
 exec "$KAFKA_HOME/bin/kafka-server-start.sh" "$KAFKA_HOME/config/server.properties"
